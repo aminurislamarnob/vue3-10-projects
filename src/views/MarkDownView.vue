@@ -17,11 +17,12 @@
 
 <script>
 import {marked} from 'marked';
+import debounch from '@/mixin/debounce.js'
 export default {
+  mixins: [debounch],
   data(){
     return{
       text: '',
-      timeOut: "",
     }
   },
   computed: {
@@ -36,11 +37,6 @@ export default {
       }
       this.deBounce(textFunc, 500)
     },
-    deBounce(func, duration = 1000){
-      clearTimeout(this.timeOut)
-
-      this.timeOut = setTimeout(func, duration)
-    }
   }
 }
 </script>
