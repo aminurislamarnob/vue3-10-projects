@@ -1,14 +1,39 @@
 <template>
-  <Header />
+  <Header @showVueModal="isModalActive = true" :isLoggedIn="isLoggedIn" />
 
+  <LoginModal v-if="isModalActive" @hideVueModal="isModalActive = false"/>
+  
   <RouterView />
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
+import LoginModal from '@/components/LoginModal.vue'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 export default {
   components: {
-    Header
+    Header,
+    LoginModal
+  },
+  data(){
+    return{
+      isModalActive: false,
+      isLoggedIn: false
+    }
+  },
+  methods: {
+    showModal(){
+      this.isModalActive = true
+    }
+  },
+  mounted(){
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
   }
 }
 </script>

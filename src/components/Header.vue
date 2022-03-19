@@ -11,10 +11,29 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                <RouterLink to="/" class="nav-link">Home</RouterLink>
+                    <RouterLink to="/" class="nav-link">Home</RouterLink>
                 </li>
                 <li class="nav-item">
-                <RouterLink to="/markdown" class="nav-link">Markdown</RouterLink>
+                    <RouterLink to="/todo" class="nav-link">Todo</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <RouterLink to="/markdown" class="nav-link">Markdown</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <RouterLink to="/calendar" class="nav-link">Calendar</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <RouterLink to="/slider" class="nav-link">Slider</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <RouterLink to="/todo-com-api" class="nav-link">Todo Comp API</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <RouterLink to="/calculator" class="nav-link">Calculator</RouterLink>
+                </li>
+                <li class="nav-item">
+                    <a v-if="isLoggedIn" href="#" class="nav-link" @click="logOut()">Logout</a>
+                    <a v-else href="#" class="nav-link" @click="$emit('show-vue-modal')">Login</a>
                 </li>
             </ul>
             </div>
@@ -22,3 +41,25 @@
         </nav>
     </header>
 </template>
+
+<script>
+import { getAuth, signOut } from "firebase/auth";
+export default {
+    props: {
+        isLoggedIn:{
+            type: Boolean,
+            required: true
+        }
+    },
+    methods: {
+        logOut(){
+            const auth = getAuth();
+            signOut(auth).then(() => {
+            // Sign-out successful.
+            }).catch((error) => {
+            // An error happened.
+            });
+        }
+    }
+}
+</script>
